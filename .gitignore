@@ -33,4 +33,11 @@ yarn-error.log*
 # Temporary files
 *.tmp
 *.temp
-temp_* 
+temp_*
+
+# Large binary files
+*.mmdb
+*.db
+*.sqlite
+*.sqlite3
+frontend/public/data/GeoLite2-City.mmdb 
