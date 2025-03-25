@@ -4,83 +4,103 @@ A lightweight monitoring application that tracks running processes, network acti
 
 ## Features
 
-- **Process Monitoring**
-  - List all running processes with detailed information
-  - Identify AI-related processes (Ollama, LM Studio, etc.)
-  - Track process resource usage
+* **Process Monitoring**  
+   * List all running processes with detailed information  
+   * Identify AI-related processes (Ollama, LM Studio, etc.)  
+   * Track process resource usage
+* **Network Connection Tracking**  
+   * Monitor outgoing network connections  
+   * Identify external vs. local connections  
+   * Real-time connection logging  
+   * DNS resolution for remote hosts
+* **Resource Monitoring**  
+   * Real-time CPU usage graphs  
+   * Memory utilization tracking  
+   * Disk usage statistics  
+   * Network traffic monitoring  
+   * GPU monitoring (if available)
+* **Security Features**  
+   * Data breach counter  
+   * Visual security status indicator  
+   * Detailed connection logging  
+   * Process filtering capabilities
 
-- **Network Connection Tracking**
-  - Monitor outgoing network connections
-  - Identify external vs. local connections
-  - Real-time connection logging
-  - DNS resolution for remote hosts
+## Docker Setup
 
-- **Resource Monitoring**
-  - Real-time CPU usage graphs
-  - Memory utilization tracking
-  - Disk usage statistics
-  - Network traffic monitoring
-  - GPU monitoring (if available)
+The application is containerized using Docker Compose for easy deployment. There are two ways to run NautScan:
 
-- **Security Features**
-  - Data breach counter
-  - Visual security status indicator
-  - Detailed connection logging
-  - Process filtering capabilities
+### 1. Standard Docker Setup
 
-## Installation
+```bash
+# Clone the repository
+git clone https://github.com/48Nauts-Operator/nautscan.git
+cd nautscan
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/yourusername/nautscan.git
-   cd nautscan
-   ```
+# Start the containers
+docker compose up -d
 
-2. Create a virtual environment (recommended):
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # On Windows: venv\Scripts\activate
-   ```
+# Access the web interface at http://localhost:3003
+```
 
-3. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+### 2. Host Network Capture (macOS)
 
-## Usage
+For capturing actual host network traffic on macOS:
 
-1. Start the application:
-   ```bash
-   python main.py
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/48Nauts-Operator/nautscan.git
+cd nautscan
 
-2. The main window will open with three tabs:
-   - **Processes**: View and filter running processes
-   - **Network**: Monitor network connections and view connection logs
-   - **Resources**: Track system resource usage with real-time graphs
+# Make the capture script executable
+chmod +x capture_mac.sh
 
-3. The top status bar shows:
-   - Number of external connections
-   - Security status indicator:
-     - 🟢 Green: No suspicious connections
-     - 🟠 Orange: Some external connections detected
-     - 🔴 Red: Multiple external connections (potential security risk)
+# Run the capture script (requires sudo for tcpdump)
+./capture_mac.sh
+
+# Access the web interface at http://localhost:3003
+```
+
+The script will:
+1. Find your primary network interface (e.g., en0)
+2. Start tcpdump to capture real network traffic
+3. Feed the captured packets to the NautScan container
+4. Start all necessary services
+
+## Architecture
+
+The application consists of several containerized services:
+
+- **Frontend**: React/Next.js web interface (port 3003)
+- **Backend**: FastAPI Python service (port 8001)
+- **PostgreSQL**: Database for packet storage
+- **Neo4j**: Graph database for connection analysis
+
+## Development Setup
+
+1. Create a virtual environment (recommended):  
+```bash
+python -m venv venv  
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+2. Install dependencies:  
+```bash
+pip install -r requirements.txt
+```
 
 ## Requirements
 
-- Python 3.8+
-- PyQt6
-- psutil
-- scapy
-- pyqtgraph
-- numpy
-- Additional requirements listed in `requirements.txt`
+* Docker and Docker Compose
+* Python 3.8+ (for development)
+* Sudo access (for host network capture)
+* Additional requirements listed in `requirements.txt`
 
 ## Note
 
 Some features may require elevated privileges to access system information:
-- On Linux/macOS: Run with `sudo` or grant necessary permissions
-- On Windows: Run as Administrator
+
+* On Linux/macOS: Run with `sudo` or grant necessary permissions
+* On Windows: Run as Administrator
 
 ## License
 
