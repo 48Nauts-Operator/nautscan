@@ -1,5 +1,25 @@
 # NautScan - Network & Process Monitor
 
+> **Status: ALPHA** ⚠️
+> 
+> This project is currently in early alpha stage. While the core functionality is implemented, it may contain bugs and is not recommended for production use.
+> 
+> ### Known Issues
+> - Network capture on macOS requires additional setup
+> - Some features may require elevated privileges
+> - Performance optimization needed for large-scale deployments
+> - UI/UX improvements pending
+> 
+> ### Development Roadmap
+> - [ ] Beta release with core features
+> - [ ] Production-ready deployment
+> - [ ] Performance optimization
+> - [ ] Enhanced security features
+> - [ ] User documentation
+> 
+> ### Contributing to Development
+> We welcome contributions! Please see our [Contributing Guidelines](docs/CONTRIBUTING.md) and [Issue Pipeline](docs/ISSUE_PIPELINE.md) for more information.
+
 A comprehensive network and process monitoring application built with modern web technologies. NautScan provides real-time visibility into network traffic, system processes, and resource utilization.
 
 ## Features
