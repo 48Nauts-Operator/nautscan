@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend-simple:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.simple
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./backend/app/simple_main.py:/app/main.py
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3003:3000"
+    volumes:
+      - ./frontend/public:/app/public
+    depends_on:
+      - backend-simple 
