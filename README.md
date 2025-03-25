@@ -1,107 +1,174 @@
 # NautScan - Network & Process Monitor
 
-A lightweight monitoring application that tracks running processes, network activity, and system resources with a focus on identifying potential data breaches from AI-related applications.
+A comprehensive network and process monitoring application built with modern web technologies. NautScan provides real-time visibility into network traffic, system processes, and resource utilization.
 
 ## Features
 
-* **Process Monitoring**  
-   * List all running processes with detailed information  
-   * Identify AI-related processes (Ollama, LM Studio, etc.)  
-   * Track process resource usage
-* **Network Connection Tracking**  
-   * Monitor outgoing network connections  
-   * Identify external vs. local connections  
-   * Real-time connection logging  
-   * DNS resolution for remote hosts
-* **Resource Monitoring**  
-   * Real-time CPU usage graphs  
-   * Memory utilization tracking  
-   * Disk usage statistics  
-   * Network traffic monitoring  
-   * GPU monitoring (if available)
-* **Security Features**  
-   * Data breach counter  
-   * Visual security status indicator  
-   * Detailed connection logging  
-   * Process filtering capabilities
+- **Real-time Network Monitoring**
+  - Live packet capture and analysis
+  - Connection tracking and visualization
+  - Protocol analysis and statistics
+  - Geographic traffic visualization
 
-## Docker Setup
+- **Process Monitoring**
+  - Real-time process list with details
+  - Resource usage per process
+  - Process hierarchy visualization
+  - System resource monitoring
 
-The application is containerized using Docker Compose for easy deployment. There are two ways to run NautScan:
+- **Security Features**
+  - Suspicious connection detection
+  - Protocol analysis
+  - Geographic anomaly detection
+  - Alert system for security events
 
-### 1. Standard Docker Setup
+## Tech Stack
 
+### Backend
+- Python 3.11+
+- FastAPI for REST API
+- Scapy for packet capture
+- SQLAlchemy for database ORM
+- PostgreSQL for relational data
+- Neo4j for graph data
+- WebSocket support for real-time updates
+
+### Frontend
+- React with TypeScript
+- Vite for build tooling
+- TailwindCSS for styling
+- Three.js for 3D visualizations
+- D3.js for data visualization
+- WebSocket client for real-time updates
+
+### Infrastructure
+- Docker for containerization
+- Docker Compose for service orchestration
+- Host network capture support
+- macOS-specific optimizations
+
+## Prerequisites
+
+- Docker and Docker Compose
+- Python 3.11 or higher
+- Node.js 18 or higher
+- Git
+
+## Quick Start
+
+1. Clone the repository:
 ```bash
-# Clone the repository
 git clone https://github.com/48Nauts-Operator/nautscan.git
 cd nautscan
+```
 
-# Start the containers
+2. Start the application using Docker Compose:
+```bash
 docker compose up -d
-
-# Access the web interface at http://localhost:3003
 ```
 
-### 2. Host Network Capture (macOS)
-
-For capturing actual host network traffic on macOS:
-
-```bash
-# Clone the repository
-git clone https://github.com/48Nauts-Operator/nautscan.git
-cd nautscan
-
-# Make the capture script executable
-chmod +x capture_mac.sh
-
-# Run the capture script (requires sudo for tcpdump)
-./capture_mac.sh
-
-# Access the web interface at http://localhost:3003
-```
-
-The script will:
-1. Find your primary network interface (e.g., en0)
-2. Start tcpdump to capture real network traffic
-3. Feed the captured packets to the NautScan container
-4. Start all necessary services
-
-## Architecture
-
-The application consists of several containerized services:
-
-- **Frontend**: React/Next.js web interface (port 3003)
-- **Backend**: FastAPI Python service (port 8001)
-- **PostgreSQL**: Database for packet storage
-- **Neo4j**: Graph database for connection analysis
+3. Access the web interface at http://localhost:3003
 
 ## Development Setup
 
-1. Create a virtual environment (recommended):  
+### Backend Setup
+
+1. Create and activate a virtual environment:
 ```bash
-python -m venv venv  
+python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-2. Install dependencies:  
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Requirements
+3. Set up environment variables:
+```bash
+cp .env.example .env
+# Edit .env with your configuration
+```
 
-* Docker and Docker Compose
-* Python 3.8+ (for development)
-* Sudo access (for host network capture)
-* Additional requirements listed in `requirements.txt`
+4. Start the backend server:
+```bash
+uvicorn backend.main:app --reload --port 8000
+```
 
-## Note
+### Frontend Setup
 
-Some features may require elevated privileges to access system information:
+1. Install dependencies:
+```bash
+cd frontend
+npm install
+```
 
-* On Linux/macOS: Run with `sudo` or grant necessary permissions
-* On Windows: Run as Administrator
+2. Set up environment variables:
+```bash
+cp .env.example .env.local
+# Edit .env.local with your configuration
+```
+
+3. Start the development server:
+```bash
+npm run dev
+```
+
+## Network Capture Setup
+
+### macOS
+
+For macOS users, use the provided capture script:
+```bash
+./capture_mac.sh
+```
+
+This script will:
+1. Identify the primary network interface
+2. Set up packet capture using tcpdump
+3. Start the NautScan containers
+4. Configure the capture pipe
+
+### Linux
+
+For Linux systems, the application can directly access network interfaces with appropriate permissions:
+```bash
+sudo docker compose up -d
+```
+
+## Project Structure
+
+```
+nautscan/
+├── backend/                 # FastAPI backend
+│   ├── api/                # API endpoints
+│   │   ├── components/     # React components
+│   │   ├── hooks/         # Custom hooks
+│   │   ├── pages/         # Page components
+│   │   └── services/      # API services
+│   └── public/            # Static assets
+├── database/              # Database migrations
+│   └── init/             # Initial setup scripts
+├── docs/                 # Documentation
+└── scripts/              # Utility scripts
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
 ## License
 
-MIT License - See LICENSE file for details 
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- [Scapy](https://scapy.net/) for packet capture capabilities
+- [FastAPI](https://fastapi.tiangolo.com/) for the modern Python web framework
+- [Three.js](https://threejs.org/) for 3D visualization
+- [TailwindCSS](https://tailwindcss.com/) for styling
+- [D3.js](https://d3js.org/) for data visualization 
